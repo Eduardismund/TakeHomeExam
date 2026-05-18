@@ -13,7 +13,6 @@ import ssvv.budget.validation.ValidationException;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -150,7 +149,7 @@ class MemberServiceTest {
     }
 
     @Test
-    void testDeleteMember_hasTransitions_deletesAll() {
+    void testDeleteMember_hasTransactions_deletesAll() {
         // state transition testing
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Utilities", CategoryType.EXPENSE);
@@ -212,16 +211,6 @@ class MemberServiceTest {
     }
 
     // updateMember tests
-
-//    public Member updateMember(Long id, String name, String role, double monthlyIncome) {
-//        Member m = new Member(id, name, role, monthlyIncome);
-//        Optional<Member> result = memberRepo.update(m);
-//        if (result.isPresent()) {
-//            throw new IllegalArgumentException("Member " + id + " not found");
-//        }
-//        return m;
-//    }
-//
     @Test
     void testUpdateMember_validData_updatesSuccessfully(){
         // equivalence partitioning
@@ -264,7 +253,7 @@ class MemberServiceTest {
 
         assertThrows(ValidationException.class, () -> {
             budgetService.updateMember(m.getId(), "   ", "Parent", 2000.0);
-        });
+        }, "Name cannot be empty! ");
     }
 
     @Test
@@ -280,12 +269,12 @@ class MemberServiceTest {
 
     @Test
     void testUpdateMember_nullName_throwsExceptions() {
-        // error guessing
+        // equivalence partitioning
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
 
         assertThrows(ValidationException.class, () -> {
             budgetService.updateMember(m.getId(), null, "Parent", 2000.0);
-        });
+        },"Name cannot be empty! ");
     }
 
 }
