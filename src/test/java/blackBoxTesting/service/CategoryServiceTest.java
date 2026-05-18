@@ -1,3 +1,5 @@
+package blackBoxTesting.service;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ssvv.budget.domain.Category;

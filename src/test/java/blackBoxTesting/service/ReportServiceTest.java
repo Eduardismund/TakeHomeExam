@@ -1,3 +1,5 @@
+package blackBoxTesting.service;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ssvv.budget.domain.Category;
@@ -5,7 +7,6 @@ import ssvv.budget.domain.CategoryType;
 import ssvv.budget.domain.Member;
 import ssvv.budget.repository.InMemoryRepository;
 import ssvv.budget.service.BudgetService;
-import ssvv.budget.service.MemberBudgetReport;
 import ssvv.budget.validation.CategoryValidator;
 import ssvv.budget.validation.MemberValidator;
 import ssvv.budget.validation.TransactionValidator;
