@@ -31,7 +31,7 @@ public class ReportServiceTest {
     }
 
     @Test
-    void testMonthlyReport_DecisionTableCombinations() {
+    void monthlyReport_DecisionTableCombinations() {
         // decision table testing
         Member primaryMember = budgetService.addMember("John", "Father", 5000.0);
         Member secondaryMember = budgetService.addMember("Jane", "Mother", 4000.0);
@@ -49,9 +49,7 @@ public class ReportServiceTest {
         budgetService.addTransaction(secondaryMember.getId(), food.getId(), 150.0, LocalDate.of(2026, 5, 12), "Jane Food");
 
         // case 3: Wrong Calendar Date frame (Belongs to John, next Month, Category Exists)
-        assertThrows(ValidationException.class, () -> {
-            budgetService.addTransaction(primaryMember.getId(), food.getId(), 300.0, LocalDate.of(2026, 6, 1), "Future Food");
-        }, "Date cannot be in the future!");
+        assertThrows(ValidationException.class, () -> budgetService.addTransaction(primaryMember.getId(), food.getId(), 300.0, LocalDate.of(2026, 6, 1), "Future Food"), "Date cannot be in the future!");
 
         // execute calculations targeting 2026-05
         List<BudgetService.MemberBudgetReport> reports = budgetService.monthlyReport(targetMonth);
@@ -81,16 +79,12 @@ public class ReportServiceTest {
     }
 
     @Test
-    void testMonthlyReport_NullMonthInput_ThrowsIllegalArgumentException() {
-        // error guessing
-        assertThrows(IllegalArgumentException.class, () -> {
-            budgetService.monthlyReport(null);
-        });
+    void monthlyReport_NullMonthInput_ThrowsIllegalArgumentException() {
+        assertThrows(IllegalArgumentException.class, () -> budgetService.monthlyReport(null));
     }
 
     @Test
-    void testMonthlyReport_EmptySystemState_ReturnsEmptyList() {
-        // state transition testing
+    void monthlyReport_EmptySystemState_ReturnsEmptyList() {
         List<BudgetService.MemberBudgetReport> reports = budgetService.monthlyReport(YearMonth.now());
         assertNotNull(reports);
         assertTrue(reports.isEmpty());

@@ -32,9 +32,7 @@ class MemberServiceTest {
 
     // addMember tests
     @Test
-    void testAddMember_validData_addsSuccessfully(){
-        // equivalence partitioning
-
+    void addMember_validData_addsSuccessfully(){
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         assertNotNull(m);
         assertEquals("Alice", m.getName());
@@ -43,44 +41,27 @@ class MemberServiceTest {
     }
 
     @Test
-    void testAddMember_emptyName_throwsException(){
-        // equivalence partitioning
-
-        assertThrows(ValidationException.class, () -> {
-            budgetService.addMember("", "Parent", 2000.0);
-        }, "Name cannot be empty! ");
+    void addMember_emptyName_throwsException(){
+        assertThrows(ValidationException.class, () -> budgetService.addMember("", "Parent", 2000.0), "Name cannot be empty! ");
     }
 
     @Test
-    void testAddMember_emptyRole_throwsException(){
-        // equivalence partitioning
-
-        assertThrows(ValidationException.class, () -> {
-            budgetService.addMember("Alice", "", 2000.0);
-        }, "Role cannot be empty! ");
+    void addMember_emptyRole_throwsException(){
+        assertThrows(ValidationException.class, () -> budgetService.addMember("Alice", "", 2000.0), "Role cannot be empty! ");
     }
 
     @Test
-    void testAddMember_nullName_throwsException(){
-        // equivalence partitioning
-
-        assertThrows(ValidationException.class, () -> {
-            budgetService.addMember(null, "Parent", 2000.0);
-        }, "Name cannot be empty! ");
+    void addMember_nullName_throwsException(){
+        assertThrows(ValidationException.class, () -> budgetService.addMember(null, "Parent", 2000.0), "Name cannot be empty! ");
     }
 
     @Test
-    void testAddMember_nullRole_throwsException(){
-        // equivalence partitioning
-
-        assertThrows(ValidationException.class, () -> {
-            budgetService.addMember("Alice", null, 2000.0);
-        }, "Role cannot be empty! ");
+    void addMember_nullRole_throwsException(){
+        assertThrows(ValidationException.class, () -> budgetService.addMember("Alice", null, 2000.0), "Role cannot be empty! ");
     }
 
     @Test
-    void testAddMember_zeroIncome_addsSuccessfully(){
-        // bva: lower boundary
+    void addMember_zeroIncome_addsSuccessfully(){
 
         Member m = budgetService.addMember("Alice", "Parent", 0.0);
         assertNotNull(m);
@@ -88,18 +69,12 @@ class MemberServiceTest {
     }
 
     @Test
-    void testAddMember_negativeIncome_throwsException(){
-        // bva: just below the boundary
-
-        assertThrows(ValidationException.class, () -> {
-            budgetService.addMember("Alice", "Parent", -0.01);
-        }, "Monthly income cannot be negative! ");
+    void addMember_negativeIncome_throwsException(){
+        assertThrows(ValidationException.class, () -> budgetService.addMember("Alice", "Parent", -0.01), "Monthly income cannot be negative! ");
     }
 
     @Test
-    void testAddMember_stateTransition_membersIncrease() {
-        // state transition testing: if initial size of the member list is n, after adding one member it should be n+1
-
+    void addMember_stateTransition_membersIncrease() {
         List<Member> initialList = budgetService.listMembers();
         int initialSize = initialList.size();
 
@@ -113,8 +88,7 @@ class MemberServiceTest {
     }
 
     @Test
-    void testAddMember_specialCharactersName_addsSuccessfully() {
-        // error guessing
+    void addMember_specialCharactersName_addsSuccessfully() {
         String weirdName = "J0hn-D0e_#1! 🎉";
         Member m = budgetService.addMember(weirdName, "Parent", 2000.0);
 
@@ -123,16 +97,14 @@ class MemberServiceTest {
     }
 
     @Test
-    void testAddMember_duplicateMembers_addsSuccessfully() {
-        // error guessing
+    void addMember_duplicateMembers_addsSuccessfully() {
         budgetService.addMember("Duplicate", "Role", 500.0);
         assertNotNull(budgetService.addMember("Duplicate", "Role", 500.0));
     }
 
     // deleteMember tests
     @Test
-    void testDeleteMember_deletesExistingMember_deletesSuccessfully(){
-        // equivalence partitioning
+    void deleteMember_deletesExistingMember_deletesSuccessfully(){
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Member deletedMember = budgetService.deleteMember(m.getId());
         assertNotNull(deletedMember);
@@ -141,18 +113,14 @@ class MemberServiceTest {
     }
 
     @Test
-    void testDeleteMember_usesInvalidId_throwsException(){
-        // equivalence partitioning
+    void deleteMember_usesInvalidId_throwsException(){
         Long nonExistentId = 999L;
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            budgetService.deleteMember(nonExistentId);
-        }, "Member 999 not found");
+        assertThrows(IllegalArgumentException.class, () -> budgetService.deleteMember(nonExistentId), "Member 999 not found");
     }
 
     @Test
-    void testDeleteMember_hasTransactions_deletesAll() {
-        // state transition testing
+    void deleteMember_hasTransactions_deletesAll() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Utilities", CategoryType.EXPENSE);
 
@@ -168,21 +136,17 @@ class MemberServiceTest {
     }
 
     @Test
-    void testDeleteMember_deletesTwice_throwsException(){
-        // error guessing
+    void deleteMember_deletesTwice_throwsException(){
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
 
         assertNotNull(budgetService.deleteMember(m.getId()));
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            budgetService.deleteMember(m.getId());
-        }, "Member" + m.getId() + " not found");
+        assertThrows(IllegalArgumentException.class, () -> budgetService.deleteMember(m.getId()), "Member" + m.getId() + " not found");
     }
 
     // listMembers tests
     @Test
-    void testListMembers_addsAndDeletes_sizeUpdates(){
-        // state transition testing
+    void listMembers_addsAndDeletes_sizeUpdates(){
         List<Member> emptyList = budgetService.listMembers();
         assertNotNull(emptyList);
         assertEquals(0, emptyList.size(), "Initial list should be empty");
@@ -199,8 +163,7 @@ class MemberServiceTest {
     }
 
     @Test
-    void testListMembers_clearsReturnedList_remainsTheSame(){
-        // error guessing
+    void listMembers_clearsReturnedList_remainsTheSame(){
         budgetService.addMember("Alice", "Parent", 2000.0);
         List<Member> list = budgetService.listMembers();
 
@@ -214,8 +177,7 @@ class MemberServiceTest {
 
     // updateMember tests
     @Test
-    void testUpdateMember_validData_updatesSuccessfully(){
-        // equivalence partitioning
+    void updateMember_validData_updatesSuccessfully(){
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Member updated = budgetService.updateMember(m.getId(), "Charles", "Grandfather", 3500.0);
 
@@ -229,38 +191,28 @@ class MemberServiceTest {
     }
 
     @Test
-    void testUpdateMember_usesInvalidId_throwsException() {
-        // equivalence partitioning
+    void updateMember_usesInvalidId_throwsException() {
         Long nonExistentId = 999L;
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            budgetService.updateMember(nonExistentId, "NoOne", "None", 1000.0);
-        }, "Member" + nonExistentId + " not found");
+        assertThrows(IllegalArgumentException.class, () -> budgetService.updateMember(nonExistentId, "NoOne", "None", 1000.0), "Member" + nonExistentId + " not found");
     }
 
     @Test
-    void testUpdateMember_negativeIncome_throwsException() {
-        // boundary value: just below lower boundary
+    void updateMember_negativeIncome_throwsException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
 
-        assertThrows(ValidationException.class, () -> {
-            budgetService.updateMember(m.getId(), "Alice", "Parent", -0.01);
-        }, "Monthly income cannot be negative! ");
+        assertThrows(ValidationException.class, () -> budgetService.updateMember(m.getId(), "Alice", "Parent", -0.01), "Monthly income cannot be negative! ");
     }
 
     @Test
-    void testUpdateMember_blankName_throwsException() {
-        // equivalence partitioning
+    void updateMember_blankName_throwsException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
 
-        assertThrows(ValidationException.class, () -> {
-            budgetService.updateMember(m.getId(), "   ", "Parent", 2000.0);
-        }, "Name cannot be empty! ");
+        assertThrows(ValidationException.class, () -> budgetService.updateMember(m.getId(), "   ", "Parent", 2000.0), "Name cannot be empty! ");
     }
 
     @Test
-    void testUpdateMember_updateExistingMember_noAdditionalMembersAdded() {
-        // error guessing
+    void updateMember_updateExistingMember_noAdditionalMembersAdded() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
 
         Member updated = budgetService.updateMember(m.getId(), "Alice", "Parent", 2000.0);
@@ -270,13 +222,10 @@ class MemberServiceTest {
     }
 
     @Test
-    void testUpdateMember_nullName_throwsExceptions() {
-        // equivalence partitioning
+    void updateMember_nullName_throwsExceptions() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
 
-        assertThrows(ValidationException.class, () -> {
-            budgetService.updateMember(m.getId(), null, "Parent", 2000.0);
-        },"Name cannot be empty! ");
+        assertThrows(ValidationException.class, () -> budgetService.updateMember(m.getId(), null, "Parent", 2000.0),"Name cannot be empty! ");
     }
 
 }

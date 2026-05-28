@@ -33,8 +33,7 @@ public class TransactionServiceTest {
 
     // list transactions tests
     @Test
-    void testListTransactions_addsAndDeletes_sizeUpdates(){
-        // state transition testing
+    void listTransactions_addsAndDeletes_sizeUpdates(){
         List<Transaction> emptyList = budgetService.listTransactions();
         assertNotNull(emptyList);
         assertEquals(0, emptyList.size(), "Initial list should be empty");
@@ -54,8 +53,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testListTransactions_clearsReturnedList_remainsTheSame(){
-        // error guessing
+    void listTransactions_clearsReturnedList_remainsTheSame(){
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
 
@@ -74,8 +72,7 @@ public class TransactionServiceTest {
 
     // update transaction tests
     @Test
-    void testUpdateTransaction_validData_updatesSuccessfully(){
-        // equivalence partitioning
+    void updateTransaction_validData_updatesSuccessfully(){
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
 
@@ -98,8 +95,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testUpdateTransaction_usesInvalidId_throwsException() {
-        // equivalence partitioning
+    void updateTransaction_usesInvalidId_throwsException() {
         Long nonExistentId = 999L;
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
@@ -117,8 +113,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testUpdateTransaction_usesInvalidMemberId_throwsException() {
-        // equivalence partitioning
+    void updateTransaction_usesInvalidMemberId_throwsException() {
         Long nonExistentId = 999L;
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
@@ -137,8 +132,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testUpdateTransaction_usesInvalidCategoryId_throwsException() {
-        // equivalence partitioning
+    void updateTransaction_usesInvalidCategoryId_throwsException() {
         Long nonExistentId = 999L;
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
@@ -157,8 +151,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testUpdateTransaction_usesNullMemberId_throwsException() {
-        // error guessing
+    void updateTransaction_usesNullMemberId_throwsException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
         Transaction t = budgetService.addTransaction(m.getId(), c.getId(), 50.0, LocalDate.now(), "Electric bill");
@@ -176,8 +169,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testUpdateTransaction_usesNullCategoryId_throwsException() {
-        // error guessing
+    void updateTransaction_usesNullCategoryId_throwsException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
         Transaction t = budgetService.addTransaction(m.getId(), c.getId(), 50.0, LocalDate.now(), "Electric bill");
@@ -195,8 +187,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testUpdateTransaction_usesNegativeMemberId_throwsException() {
-        // error guessing/ bva: under lower boundary
+    void updateTransaction_usesNegativeMemberId_throwsException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
         Transaction t = budgetService.addTransaction(m.getId(), c.getId(), 50.0, LocalDate.now(), "Electric bill");
@@ -214,8 +205,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testUpdateTransaction_usesNegativeCategoryId_throwsException() {
-        // error guessing/ bva: under lower boundary
+    void updateTransaction_usesNegativeCategoryId_throwsException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
         Transaction t = budgetService.addTransaction(m.getId(), c.getId(), 50.0, LocalDate.now(), "Electric bill");
@@ -233,8 +223,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testUpdateTransaction_usesNegativeAmount_throwsException() {
-        // error guessing/ bva: under lower boundary
+    void updateTransaction_usesNegativeAmount_throwsException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
         Transaction t = budgetService.addTransaction(m.getId(), c.getId(), 50.0, LocalDate.now(), "Electric bill");
@@ -252,8 +241,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testUpdateTransaction_usesDateInFuture_throwsException() {
-        // error guessing/ equivalence partitioning
+    void updateTransaction_usesDateInFuture_throwsException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
         Transaction t = budgetService.addTransaction(m.getId(), c.getId(), 50.0, LocalDate.now(), "Electric bill");
@@ -271,8 +259,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testUpdateTransaction_usesNullDate_throwsException() {
-        // error guessing
+    void updateTransaction_usesNullDate_throwsException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
         Transaction t = budgetService.addTransaction(m.getId(), c.getId(), 50.0, LocalDate.now(), "Electric bill");
@@ -290,8 +277,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testUpdateTransaction_usesNullDescription_throwsException() {
-        // error guessing
+    void updateTransaction_usesNullDescription_throwsException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
         Transaction t = budgetService.addTransaction(m.getId(), c.getId(), 50.0, LocalDate.now(), "Electric bill");
@@ -308,13 +294,8 @@ public class TransactionServiceTest {
         }, "Description cannot be null! ");
     }
 
-    // ==========================================
-    // CRITICAL ENHANCEMENTS TO EXISTING TESTS
-    // ==========================================
-
     @Test
-    void testUpdateTransaction_amountExactlyZero_throwsException() {
-        // bva: amount exactly 0
+    void updateTransaction_amountExactlyZero_throwsException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
         Transaction t = budgetService.addTransaction(m.getId(), c.getId(), 50.0, LocalDate.now(), "Tx");
@@ -325,8 +306,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testUpdateTransaction_invalidMemberAndCategoryId_throwsValidationException() {
-        // decision table testing: what happens when multiple validation failures take place?
+    void updateTransaction_invalidMemberAndCategoryId_throwsValidationException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
         Transaction t = budgetService.addTransaction(m.getId(), c.getId(), 50.0, LocalDate.now(), "Tx");
@@ -338,8 +318,7 @@ public class TransactionServiceTest {
 
     // delete transaction tests
     @Test
-    void testDeleteTransaction_validData_deletesSuccessfully() {
-        // equivalence partitioning
+    void deleteTransaction_validData_deletesSuccessfully() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
         Transaction t = budgetService.addTransaction(m.getId(), c.getId(), 50.0, LocalDate.now(), "Gas bill");
@@ -352,8 +331,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testDeleteTransaction_invalidId_throwsException() {
-        // equivalence partitioning
+    void deleteTransaction_invalidId_throwsException() {
         Long nonExistentId = 88888L;
 
         assertThrows(IllegalArgumentException.class, () -> {
@@ -362,8 +340,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testDeleteTransaction_deletesTwice_throwsException() {
-        // error guessing
+    void deleteTransaction_deletesTwice_throwsException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
         Transaction t = budgetService.addTransaction(m.getId(), c.getId(), 50.0, LocalDate.now(), "Gas bill");
@@ -378,8 +355,7 @@ public class TransactionServiceTest {
     // add transaction tests
 
     @Test
-    void testAddTransaction_validData_addsSuccessfully() {
-        // Equivalence Partitioning - Normal Valid Case
+    void addTransaction_validData_addsSuccessfully() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
 
@@ -392,8 +368,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testAddTransaction_nonExistentMemberId_throwsException() {
-        // equivalence partitioning
+    void addTransaction_nonExistentMemberId_throwsException() {
         Long nonExistentId = 999L;
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
 
@@ -403,8 +378,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testAddTransaction_nonExistentCategoryId_throwsException() {
-        // equivalence partitioning
+    void addTransaction_nonExistentCategoryId_throwsException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Long nonExistentId = 999L;
 
@@ -414,8 +388,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testAddTransaction_amountExactlyZero_throwsException() {
-        // bva: strictly 0
+    void addTransaction_amountExactlyZero_throwsException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
 
@@ -425,8 +398,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testAddTransaction_amountMinimumPositive_addsSuccessfully() {
-        // bva: just above lower boundary
+    void addTransaction_amountMinimumPositive_addsSuccessfully() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
 
@@ -436,8 +408,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testAddTransaction_dateExactlyToday_addsSuccessfully() {
-        // bva: upper limit edge boundary
+    void addTransaction_dateExactlyToday_addsSuccessfully() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
 
@@ -446,8 +417,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testAddTransaction_dateTomorrow_throwsException() {
-        // bva: date one day past upper boundary
+    void addTransaction_dateTomorrow_throwsException() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
         LocalDate tomorrow = LocalDate.now().plusDays(1);
@@ -458,8 +428,7 @@ public class TransactionServiceTest {
     }
 
     @Test
-    void testAddTransaction_blankDescription_addsSuccessfully() {
-        // error guessing
+    void addTransaction_blankDescription_addsSuccessfully() {
         Member m = budgetService.addMember("Alice", "Parent", 2000.0);
         Category c = budgetService.addCategory("Salary", CategoryType.INCOME);
 
