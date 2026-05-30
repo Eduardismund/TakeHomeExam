@@ -1,9 +1,7 @@
 # Task 3 — GUI Testing
 
 **Project:** Family Budget Manager  
-**Application type:** Java 17 desktop GUI (Swing)  
-**Tester:** _(your name)_  
-**Date:** May 2026
+**Application type:** Java 17 desktop GUI (Swing) 
 
 ---
 
@@ -20,12 +18,6 @@ This document describes the **GUI testing** activity for Task 3 of the SSVV take
 - Validation error dialogs and confirmation dialogs
 - Cross-panel behaviour (e.g. new members appearing in the Transactions dropdown after tab switch)
 
-### Out of scope
-
-- Service-layer unit tests (Task 2 — white box / black box)
-- Integration tests that bypass the UI (Task 2)
-- Performance, security, and multi-user testing
-- Web/browser testing (this is a Swing desktop app, not a web app)
 
 ---
 
@@ -152,7 +144,4 @@ The test suite is repeatable via `./gradlew test --tests "guiTesting.*"` and can
 ```bash
 # GUI tests only (Task 3)
 ./gradlew test --tests "guiTesting.*"
-
-# All project tests (Task 2 + Task 3)
-./gradlew test
 ```
