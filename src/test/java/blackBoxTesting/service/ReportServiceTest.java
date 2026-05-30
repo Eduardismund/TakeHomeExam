@@ -7,6 +7,7 @@ import ssvv.budget.domain.CategoryType;
 import ssvv.budget.domain.Member;
 import ssvv.budget.repository.InMemoryRepository;
 import ssvv.budget.service.BudgetService;
+import ssvv.budget.service.MemberBudgetReport;
 import ssvv.budget.validation.CategoryValidator;
 import ssvv.budget.validation.MemberValidator;
 import ssvv.budget.validation.TransactionValidator;
@@ -52,14 +53,14 @@ public class ReportServiceTest {
         assertThrows(ValidationException.class, () -> budgetService.addTransaction(primaryMember.getId(), food.getId(), 300.0, LocalDate.of(2026, 6, 1), "Future Food"), "Date cannot be in the future!");
 
         // execute calculations targeting 2026-05
-        List<BudgetService.MemberBudgetReport> reports = budgetService.monthlyReport(targetMonth);
+        List<MemberBudgetReport> reports = budgetService.monthlyReport(targetMonth);
 
         // verify isolation boundaries
         assertNotNull(reports);
         assertEquals(2, reports.size(), "Should have a generated report line entry for every member registered");
 
         // locate John's mapped calculation structure
-        BudgetService.MemberBudgetReport johnsReport = reports.stream()
+        MemberBudgetReport johnsReport = reports.stream()
                 .filter(r -> r.getMemberId().equals(primaryMember.getId()))
                 .findFirst()
                 .orElseThrow();
@@ -69,7 +70,7 @@ public class ReportServiceTest {
         assertEquals(800.0, johnsReport.getBalance());
 
         // locate Jane's mapped calculation structure
-        BudgetService.MemberBudgetReport janesReport = reports.stream()
+        MemberBudgetReport janesReport = reports.stream()
                 .filter(r -> r.getMemberId().equals(secondaryMember.getId()))
                 .findFirst()
                 .orElseThrow();
@@ -85,7 +86,7 @@ public class ReportServiceTest {
 
     @Test
     void monthlyReport_EmptySystemState_ReturnsEmptyList() {
-        List<BudgetService.MemberBudgetReport> reports = budgetService.monthlyReport(YearMonth.now());
+        List<MemberBudgetReport> reports = budgetService.monthlyReport(YearMonth.now());
         assertNotNull(reports);
         assertTrue(reports.isEmpty());
     }
