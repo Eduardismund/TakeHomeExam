@@ -1,6 +1,7 @@
 package ssvv.budget.ui;
 
 import ssvv.budget.service.BudgetService;
+import ssvv.budget.service.MemberBudgetReport;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -47,9 +48,9 @@ public class ReportPanel extends JPanel {
     private void onGenerate() {
         try {
             YearMonth ym = YearMonth.parse(monthField.getText().trim(), MONTH_FMT);
-            List<BudgetService.MemberBudgetReport> reports = service.monthlyReport(ym);
+            List<MemberBudgetReport> reports = service.monthlyReport(ym);
             tableModel.setRowCount(0);
-            for (BudgetService.MemberBudgetReport r : reports) {
+            for (MemberBudgetReport r : reports) {
                 tableModel.addRow(new Object[]{
                         r.getMemberId(), r.getMemberName(),
                         String.format("%.2f", r.getTotalIncome()),
