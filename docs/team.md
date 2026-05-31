@@ -1,9 +1,9 @@
 # Team
 
 1. Eduard-David Jitareanu
-2. Butuza Ema-Patricia
-3.
-4.
-5.
-6.
+2. Teodora Buga
+3. Ema Butuza
+4. Bianca-Geogiana Cirnu
+5. Sonia Halip
+6. Antonia Buta
 
